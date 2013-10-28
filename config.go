@@ -16,15 +16,21 @@ type Configurable struct {
 	Config interface{}
 }
 
-func Read(filePath string, conf *Config) error {
+func Init(filePath string) (*Config, error) {
+	return Read(filePath)
+}
+
+func Read(filePath string) (*Config, error) {
 	logger.Info("Loading configuration from %s...", filePath)
 	configJson, err := ioutil.ReadFile(filePath)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return ReadJson(configJson, conf)
+	return ReadJson(configJson)
 }
 
-func ReadJson(configJson []byte, conf *Config) error {
-	return json.Unmarshal(configJson, conf)
+func ReadJson(configJson []byte) (*Config, error) {
+	conf := new(Config)
+	err := json.Unmarshal(configJson, conf)
+	return conf, err
 }
