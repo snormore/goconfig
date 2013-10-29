@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/snormore/gologger"
 	"io/ioutil"
+	"path/filepath"
 )
 
 type Config interface{}
@@ -17,6 +18,10 @@ type Configurable struct {
 }
 
 func Init(filePath string) (*Config, error) {
+	filePath, err := filepath.Abs(filePath)
+	if err != nil {
+		return nil, err
+	}
 	return Read(filePath)
 }
 
