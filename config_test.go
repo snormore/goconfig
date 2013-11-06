@@ -41,7 +41,7 @@ var SampleConfigObject2 = SampleConfig{
 
 func TestReadJson(t *testing.T) {
 	conf := Config(new(SampleConfig))
-	err := ReadJson([]byte(SampleConfigJson), &conf)
+	err := ReadJson([]byte(&conf, SampleConfigJson))
 	assert.NoError(t, err)
 	assert.Equal(t, SampleConfigObject.AppName, conf.(*SampleConfig).AppName)
 	assert.Equal(t, SampleConfigObject.Verbosity, conf.(*SampleConfig).Verbosity)
